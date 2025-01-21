@@ -6,6 +6,7 @@ app.use(express.json());
 
 // Configura la conexión a MongoDB
 const uri = "mongodb+srv://ialfper:ialfper21@alumnos.zoinj.mongodb.net/?retryWrites=true&w=majority&appName=alumnos";
+
 async function connectToMongoDB() {
   const client = new MongoClient(uri, {
     serverApi: {
@@ -61,13 +62,12 @@ app.get('/api/:buscar', async (req, res) => {
     let lista=[];
     const usersCollection = await connectToMongoDB();
     const resultados = await usersCollection.find().toArray();
+    console.log(resultados);
     for (let dato of resultados) {
-      console.log(dato);
       
       if (dato["nombre"].toLowerCase().includes(resultados)) {
         lista.push(dato);
       }else{
-
       }
       
     }
