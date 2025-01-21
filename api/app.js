@@ -62,10 +62,9 @@ app.get('/api/:buscar', async (req, res) => {
     let lista=[];
     const usersCollection = await connectToMongoDB();
     const resultados = await usersCollection.find().toArray();
-    console.log(resultados);
     for (let dato of resultados) {
       
-      if (dato["nombre"].toLowerCase().includes(resultados)) {
+      if (dato["nombre"].toLowerCase().includes(query)) {
         lista.push(dato);
       }else{
       }
