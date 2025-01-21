@@ -25,6 +25,12 @@ async function connectToMongoDB() {
     throw new Error('Error al conectar a la base de datos');
   }
 }
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');  // Dominio del frontend
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');  // Métodos permitidos
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');  // Cabeceras permitidas
+  next();
+});
 
 // Endpoint GET para obtener todos los usuarios
 app.get('/api/users', async (req, res) => {
