@@ -1,23 +1,21 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
 
 
 app.use(express.json());
 
-// Configura la conexión a MongoDB
-const uri = "mongodb+srv://ialfper:ialfper21@alumnos.zoinj.mongodb.net/alumnos?retryWrites=true&w=majority";
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
 
 
 async function connectToMongoDB() {
+  const { MongoClient, ServerApiVersion } = require('mongodb');
+  const uri = "mongodb+srv://ialfper:ialfper21@alumnos.zoinj.mongodb.net/alumnos?retryWrites=true&w=majority";
+  const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
   try {
     await client.connect();
     console.log("Conectado a MongoDB Atlas");
