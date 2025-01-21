@@ -22,8 +22,10 @@ async function connectToMongoDB() {
     await client.connect();
     console.log("Conectado a MongoDB Atlas");
     const db = client.db('despliegue');
-    usersCollection = db.collection('usuarios');
-    return usersCollection;
+    let usersCollection = db.collection('usuarios');
+    let pat={};
+    const datos=await usersCollection.find(pat).toArray(); 
+    return datos;
   } catch (error) {
     console.error("Error al conectar a MongoDB:", error);
   }
@@ -33,9 +35,8 @@ async function connectToMongoDB() {
 // Endpoint GET para obtener todos los usuarios
 app.get('/api/users', async (req, res) => {
   try {
-    const usersCollection=await connectToMongoDB();
-    const users = await usersCollection.find().toArray();
-    res.json(users);
+    const patata= await connectToMongoDB();
+    res.json(patata);
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener los usuarios' });
   }
