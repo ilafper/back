@@ -28,12 +28,12 @@ async function connectToMongoDB() {
     console.error("Error al conectar a MongoDB:", error);
   }
 }
-connectToMongoDB();
+
 
 // Endpoint GET para obtener todos los usuarios
 app.get('/api/users', async (req, res) => {
   try {
-    const usersCollection= connectToMongoDB();
+    const usersCollection=await connectToMongoDB();
     const users = await usersCollection.find().toArray();
     res.json(users);
   } catch (error) {
