@@ -51,22 +51,25 @@ app.post('/api/nuevo', async (req, res) => {
 });
 
 // Endpoint GET para buscar usuarios
-app.get('/api/buscar', async (req, res) => {
-  const query = req.query.q?.toLowerCase();
+app.get('/api/:buscar', async (req, res) => {
+  const query = req.params.buscar.toLowerCase();
   if (!query) {
     return res.status(400).json({ error: "Debes proporcionar un término de búsqueda." });
   }
 
   try {
+    let lista=[];
     const usersCollection = await connectToMongoDB();
-    const resultados = await usersCollection.find({
-      $or: [
-        { nombre: { $regex: query, $options: 'i' } },
-        { ap1: { $regex: query, $options: 'i' } },
-        { direccion: { $regex: query, $options: 'i' } }
-      ]
-    }).toArray();
-    res.json(resultados);
+    const resultados = await usersCollection.find().toArray();
+    for (let dato of resultados) {
+      if (dato["nombre"].toLowerCase().includes(resultados)) {
+        lista.push(dato);
+      }else{
+
+      }
+      
+    }
+    res.json(lista);
   } catch (error) {
     res.status(500).json({ error: 'Error al buscar usuarios' });
   }
